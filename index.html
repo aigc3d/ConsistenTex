@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="ConsistenTex">
+  <meta property="og:title" content="ConsistenTex" />
+  <meta property="og:description"
+    content="An Optimization Framework to Enforce Multi-View Consistency for Texturing 3D Meshes Using Pre-Trained Text-to-Image Models" />
+  <meta property="og:url" content="URL OF THE WEBSITE" />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/video_t1.png" />
+  <meta property="og:image:width" content="2412" />
+  <meta property="og:image:height" content="1394" />
+
+  <meta name="twitter:title" content="ConsistenTex">
+  <meta name="twitter:description"
+    content="An Optimization Framework to Enforce Multi-View Consistency for Texturing 3D Meshes Using Pre-Trained Text-to-Image Models">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/video_t1.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="Image-to-Video">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ConsistenTex</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/app.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script src="static/js/video_comparison.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href=https://github.com/aigc3d>
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://aigc3d.github.io/richdreamer">
+              Richdreamer
+            </a>
+            <a class="navbar-item" href="https://github.com/yushuang-wu/IPoD">
+              IPoD
+            </a>
+            <a class="navbar-item" href="https://aigc3d.github.io/gobjaverse/">
+              G-Objaverse
+            </a>
+            <a class="navbar-item" href="https://aigc3d.github.io/motionshop/">
+              MotionShop
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">An Optimization Framework to Enforce Multi-View Consistency for
+              <br>Texturing 3D Meshes Using Pre-Trained Text-to-Image Models
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="bushe.zzy@alibaba-inc.com" target="_blank">Zhengyi Zhao<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://www.cs.utexas.edu/~song/" target="_blank">Chen Song<sup>2</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?user=aJPO514AAAAJ&hl=zh-CN&oi=ao"
+                  target="_blank">Xiaodong Gu<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="dy283090@alibaba-inc.com" target="_blank">Yuan Dong<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=UDnHe2IAAAAJ"
+                  target="_blank">Qi Zuo<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://weihao-yuan.com/" target="_blank">Weihao Yuan<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=GHOQKCwAAAAJ&hl=zh-CN&oi=ao" target="_blank">Zilong
+                  Dong<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://research.cs.washington.edu/istc/lfb/" target="_blank">Liefeng
+                  Bo<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://www.cs.utexas.edu/~huangqx/" target="_blank">Qixing Huang<sup>2</sup></a></span>
+              </span>
+
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Alibaba Group </span>
+              <span class="author-block"><sup>2</sup>The University of Texas at Austin</span>
+              <!-- <div class="is-size-5 publication-authors">
+                      <span class="author-block">Alibaba Group</span>
+                      <div class="is-size-5 publication-authors">
+                        <span class="author-block">Alibaba Group</span>
+                        <div class="is-size-5 publication-authors">
+                          <span class="author-block">Alibaba Group</span>
+                          <div class="is-size-5 publication-authors">
+                            <span class="author-block">Alibaba Group</span> -->
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="..." target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <!-- Video link -->
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=bkFRC4-QWq0" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>video</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser video-->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="static/images/Fig1.png" alt="MY ALT TEXT" />
+        <h2 class="content has-text-justified">
+          Given a 3D mesh and a text prompt, we propose an optimization framework to
+          synthesize the multi-view consistent texture. Top: meshes from a 3D generation model.
+          Bottom: artist-created meshes.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End teaser video -->
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              A fundamental problem in the texturing of 3D meshes using pre-trained text-to-image models is to ensure
+              multi-view consistency. State-of-the-art approaches typically use diffusion models to aggregate multi-view
+              inputs, where common issues are the blurriness caused by the averaging operation in the aggregation step
+              or inconsistencies in local features. This paper introduces an optimization framework that proceeds in
+              four stages to achieve multi-view consistency.Specifically, the first stage generates an over-complete set
+              of 2D textures from a predefined set of
+              viewpoints using an MV-consistent diffusion process. The second stage selects a subset of views that are
+              mutually consistent while covering the underlying 3D model. We show how to achieve this goal by solving
+              semi-definite programs. The third stage performs non-rigid alignment to align the selected views across
+              overlapping regions. The fourth stage solves an MRF problem to associate each mesh face with a selected
+              view. In particular, the third and fourth stages are iterated, with the cuts obtained in the fourth stage
+              encouraging non-rigid alignment in the third stage to focus on regions close to the cuts. Experimental
+              results show that our approach significantly outperforms baseline approaches both qualitatively and
+              quantitatively.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End paper abstract -->
+  <!-- https://youtu.be/bkFRC4-QWq0 -->
+
+
+  <!-- Youtube video -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <!-- Paper video. -->
+        <h2 class="title is-3">Video</h2>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+
+            <div class="publication-video">
+              <!-- Youtube embed code here -->
+              <iframe src="https://www.youtube.com/watch?v=bkFRC4-QWq0" frameborder="0"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End youtube video -->
+
+  </section>
+
+  <!-- Image carousel -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Method</h2>
+        <div class="item">
+          <!-- Your image here -->
+          <img src="static/images/Fig2.png" alt="MY ALT TEXT" />
+          <h2 class="content has-text-justified">
+            The overall pipeline of our approach, which consists of four stages. The first
+            stage (view generation) uses a pre-trained text-to-image model to generate an over-
+            complete set of RGB-D images of the input model. The second stage (view selection)
+            selects a subset of consistent RGB-D images from the view generation output. The third
+            stage (view alignment) performs non-rigid warping to further improve the multi-view
+            consistency among the selected images. The last stage (texture stitching) produces cuts
+            between pairs of overlapping images by solving a second-order MRF problem.
+          </h2>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+  <!-- End image carousel -->
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+      <h1 class="title is-4">Gallery of Textured Meshes</h1>
+      <h1>[Click on the cover to play the animation]</h1>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="000f88bb21164319ae797d315be6bc0eDiv" style="width: 100%">
+            <!-- <img class="video-cover" src="static/images/000f88bb21164319ae797d315be6bc0e_cover.jpg" alt="Video Cover"> -->
+            <video class="video" id="000f88bb21164319ae797d315be6bc0e" loop playsinline autoPlay muted
+              src="static/videos/000f88bb21164319ae797d315be6bc0e_con.mp4" onplay="resizeAndPlay(this)">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="000f88bb21164319ae797d315be6bc0eMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Watch Model With Stand
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0002c6eafa154e8bb08ebafb715a8d46Div" style="width: 100%">
+            <img class="video-cover" src="static/images/0002c6eafa154e8bb08ebafb715a8d46_cover.jpg" alt="Video Cover">
+            <video class="video" id="0002c6eafa154e8bb08ebafb715a8d46" loop playsinline autoPlay muted
+              src="static/videos/0002c6eafa154e8bb08ebafb715a8d46_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0002c6eafa154e8bb08ebafb715a8d46Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Birthday cake
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="002e02c30121465c8a01bcb83b584ea5Div" style="width: 100%">
+            <img class="video-cover" src="static/images/002e02c30121465c8a01bcb83b584ea5_cover.jpg" alt="Video Cover">
+            <video class="video" id="002e02c30121465c8a01bcb83b584ea5" loop playsinline autoPlay muted
+              src="static/videos/002e02c30121465c8a01bcb83b584ea5_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="002e02c30121465c8a01bcb83b584ea5Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A pair of blue jeans
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="0023717f4f564cc99f4ded70db04f590Div" style="width: 100%">
+            <img class="video-cover" src="static/images/0023717f4f564cc99f4ded70db04f590_cover.jpg" alt="Video Cover">
+            <video class="video" id="0023717f4f564cc99f4ded70db04f590" loop playsinline autoPlay muted
+              src="static/videos/0023717f4f564cc99f4ded70db04f590_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0023717f4f564cc99f4ded70db04f590Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Rusty kerosene lamp
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="004fb4d72f6c4e55a15b9025a868d1a3Div" style="width: 100%">
+            <img class="video-cover" src="static/images/004fb4d72f6c4e55a15b9025a868d1a3_cover.jpg" alt="Video Cover">
+            <video class="video" id="004fb4d72f6c4e55a15b9025a868d1a3" loop playsinline autoPlay muted
+              src="static/videos/004fb4d72f6c4e55a15b9025a868d1a3_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="004fb4d72f6c4e55a15b9025a868d1a3Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              a roast chicken
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="017fe235577b4083ab32c2b7949ba022Div" style="width: 100%">
+            <img class="video-cover" src="static/images/017fe235577b4083ab32c2b7949ba022_cover.jpg" alt="Video Cover">
+            <video class="video" id="017fe235577b4083ab32c2b7949ba022" loop playsinline autoPlay muted
+              src="static/videos/017fe235577b4083ab32c2b7949ba022_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="017fe235577b4083ab32c2b7949ba022Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A platinum ring studded with precious stones
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="00286954e2d54db8bc7832cc8682b6ffDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/00286954e2d54db8bc7832cc8682b6ff_cover.jpg" alt="Video Cover">
+            <video class="video" id="00286954e2d54db8bc7832cc8682b6ff" loop playsinline autoPlay muted
+              src="static/videos/00286954e2d54db8bc7832cc8682b6ff_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="00286954e2d54db8bc7832cc8682b6ffMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Furniture Bed
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0025c5e2333949feb1db259d4ff08dbeDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0025c5e2333949feb1db259d4ff08dbe_cover.jpg" alt="Video Cover">
+            <video class="video" id="0025c5e2333949feb1db259d4ff08dbe" loop playsinline autoPlay muted
+              src="static/videos/0025c5e2333949feb1db259d4ff08dbe_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0025c5e2333949feb1db259d4ff08dbeMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A wooden bird house
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="003199cc6ff2410cb2d8e6f8a9cbb163Div" style="width: 100%">
+            <img class="video-cover" src="static/images/003199cc6ff2410cb2d8e6f8a9cbb163_cover.jpg" alt="Video Cover">
+            <video class="video" id="003199cc6ff2410cb2d8e6f8a9cbb163" loop playsinline autoPlay muted
+              src="static/videos/003199cc6ff2410cb2d8e6f8a9cbb163_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="003199cc6ff2410cb2d8e6f8a9cbb163Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              a Portugal Fire Hydrant
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="0032696f5871429fbd0549d9628f812cDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0032696f5871429fbd0549d9628f812c_cover.jpg" alt="Video Cover">
+            <video class="video" id="0032696f5871429fbd0549d9628f812c" loop playsinline autoPlay muted
+              src="static/videos/0032696f5871429fbd0549d9628f812c_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0032696f5871429fbd0549d9628f812cMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A Christmas present
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0033322379a24798a6875a5cb2de54f5Div" style="width: 100%">
+            <img class="video-cover" src="static/images/0033322379a24798a6875a5cb2de54f5_cover.jpg" alt="Video Cover">
+            <video class="video" id="0033322379a24798a6875a5cb2de54f5" loop playsinline autoPlay muted
+              src="static/videos/0033322379a24798a6875a5cb2de54f5_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0033322379a24798a6875a5cb2de54f5Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A raspberry
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0046f208ef8d4988ba7bb9d297f29ec7Div" style="width: 100%">
+            <img class="video-cover" src="static/images/0046f208ef8d4988ba7bb9d297f29ec7_cover.jpg" alt="Video Cover">
+            <video class="video" id="0046f208ef8d4988ba7bb9d297f29ec7" loop playsinline autoPlay muted
+              src="static/videos/0046f208ef8d4988ba7bb9d297f29ec7_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0046f208ef8d4988ba7bb9d297f29ec7Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              An old Dutch windmill building
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="0023b3edbc114be188ca9d8f729dfaafDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0023b3edbc114be188ca9d8f729dfaaf_cover.jpg" alt="Video Cover">
+            <video class="video" id="0023b3edbc114be188ca9d8f729dfaaf" loop playsinline autoPlay muted
+              src="static/videos/0023b3edbc114be188ca9d8f729dfaaf_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0023b3edbc114be188ca9d8f729dfaafMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              a vintage car
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0056880681c044cb9fe815a9eed0425dDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0056880681c044cb9fe815a9eed0425d_cover.jpg" alt="Video Cover">
+            <video class="video" id="0056880681c044cb9fe815a9eed0425d" loop playsinline autoPlay muted
+              src="static/videos/0056880681c044cb9fe815a9eed0425d_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0056880681c044cb9fe815a9eed0425dMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A rhino
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="00602ef508784e5384665aacaaf1f3a0Div" style="width: 100%">
+            <img class="video-cover" src="static/images/00602ef508784e5384665aacaaf1f3a0_cover.jpg" alt="Video Cover">
+            <video class="video" id="00602ef508784e5384665aacaaf1f3a0" loop playsinline autoPlay muted
+              src="static/videos/00602ef508784e5384665aacaaf1f3a0_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="00602ef508784e5384665aacaaf1f3a0Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A handle saw
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="0064add4992b426cb2f862e5875ebf6dDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0064add4992b426cb2f862e5875ebf6d_cover.jpg" alt="Video Cover">
+            <video class="video" id="0064add4992b426cb2f862e5875ebf6d" loop playsinline autoPlay muted
+              src="static/videos/0064add4992b426cb2f862e5875ebf6d_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0064add4992b426cb2f862e5875ebf6dMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A pink donut
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0083fa5f10a442408e0f3f88df19c8adDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/0083fa5f10a442408e0f3f88df19c8ad_cover.jpg" alt="Video Cover">
+            <video class="video" id="0083fa5f10a442408e0f3f88df19c8ad" loop playsinline autoPlay muted
+              src="static/videos/0083fa5f10a442408e0f3f88df19c8ad_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0083fa5f10a442408e0f3f88df19c8adMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              An ancient shield
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="0087dc01648d4cc792a7d1e49848b825_1Div" style="width: 100%">
+            <img class="video-cover" src="static/images/0087dc01648d4cc792a7d1e49848b825_1_cover.jpg" alt="Video Cover">
+            <video class="video" id="0087dc01648d4cc792a7d1e49848b825_1" loop playsinline autoPlay muted
+              src="static/videos/0087dc01648d4cc792a7d1e49848b825_1_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="0087dc01648d4cc792a7d1e49848b825_1Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Stone horse head sculpture
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="00978a128283411582590096643ec101Div" style="width: 100%">
+            <img class="video-cover" src="static/images/00978a128283411582590096643ec101_cover.jpg" alt="Video Cover">
+            <video class="video" id="00978a128283411582590096643ec101" loop playsinline autoPlay muted
+              src="static/videos/00978a128283411582590096643ec101_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="00978a128283411582590096643ec101Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A pale yellow seahorse
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="00b267b43669422cbb4ec3a4e9b1c16e_1Div" style="width: 100%">
+            <img class="video-cover" src="static/images/00b267b43669422cbb4ec3a4e9b1c16e_1_cover.jpg" alt="Video Cover">
+            <video class="video" id="00b267b43669422cbb4ec3a4e9b1c16e_1" loop playsinline autoPlay muted
+              src="static/videos/00b267b43669422cbb4ec3a4e9b1c16e_1_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="00b267b43669422cbb4ec3a4e9b1c16e_1Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A pair of sunglasses
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="00d56831f9bc49f9a668f418c1af7558Div" style="width: 100%">
+            <img class="video-cover" src="static/images/00d56831f9bc49f9a668f418c1af7558_cover.jpg" alt="Video Cover">
+            <video class="video" id="00d56831f9bc49f9a668f418c1af7558" loop playsinline autoPlay muted
+              src="static/videos/00d56831f9bc49f9a668f418c1af7558_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="00d56831f9bc49f9a668f418c1af7558Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A dancing brown dog in a white shirt, wearing dark sunglasses
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="013c3a1d945a4336a87f889c3d4c25b1Div" style="width: 100%">
+            <img class="video-cover" src="static/images/013c3a1d945a4336a87f889c3d4c25b1_cover.jpg" alt="Video Cover">
+            <video class="video" id="013c3a1d945a4336a87f889c3d4c25b1" loop playsinline autoPlay muted
+              src="static/videos/013c3a1d945a4336a87f889c3d4c25b1_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="013c3a1d945a4336a87f889c3d4c25b1Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Precision Sniper Rifle, CSGO AWP DRAGON LORE
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="015777939fc3429ba4b5343be9d51ffaDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/015777939fc3429ba4b5343be9d51ffa_cover.jpg" alt="Video Cover">
+            <video class="video" id="015777939fc3429ba4b5343be9d51ffa" loop playsinline autoPlay muted
+              src="static/videos/015777939fc3429ba4b5343be9d51ffa_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="015777939fc3429ba4b5343be9d51ffaMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A kid's bike
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="010b9ece8a3a49e3b73be0b3cd02c720Div" style="width: 100%">
+            <img class="video-cover" src="static/images/010b9ece8a3a49e3b73be0b3cd02c720_cover.jpg" alt="Video Cover">
+            <video class="video" id="010b9ece8a3a49e3b73be0b3cd02c720" loop playsinline autoPlay muted
+              src="static/videos/010b9ece8a3a49e3b73be0b3cd02c720_con.mp4" onplay="resizeAndPlay(this)" controls
+              style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="010b9ece8a3a49e3b73be0b3cd02c720Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A vase with red roses
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="1703465469959Div" style="width: 100%">
+            <img class="video-cover" src="static/images/1703465469959_cover.jpg" alt="Video Cover">
+            <video class="video" id="1703465469959" loop playsinline autoPlay muted
+              src="static/videos/1703465469959_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="1703465469959Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Sanxingdui bronze mask.
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="1703465525147Div" style="width: 100%">
+            <img class="video-cover" src="static/images/1703465525147_cover.jpg" alt="Video Cover">
+            <video class="video" id="1703465525147" loop playsinline autoPlay muted
+              src="static/videos/1703465525147_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="1703465525147Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A hamburger.
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="1703465594458Div" style="width: 100%">
+            <img class="video-cover" src="static/images/1703465594458_cover.jpg" alt="Video Cover">
+            <video class="video" id="1703465594458" loop playsinline autoPlay muted
+              src="static/videos/1703465594458_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="1703465594458Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              lazboy rocker recliner
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="backbagDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/backbag_cover.jpg" alt="Video Cover">
+            <video class="video" id="backbag" loop playsinline autoPlay muted src="static/videos/backbag_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="backbagMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              black backpack with red accents
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="CCRSZSXCNIIU2Div" style="width: 100%">
+            <img class="video-cover" src="static/images/CCRSZSXCNIIU2_cover.jpg" alt="Video Cover">
+            <video class="video" id="CCRSZSXCNIIU2" loop playsinline autoPlay muted
+              src="static/videos/CCRSZSXCNIIU2_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="CCRSZSXCNIIU2Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A lovely cabbage
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="CCRVFVJLDEAU2Div" style="width: 100%">
+            <img class="video-cover" src="static/images/CCRVFVJLDEAU2_cover.jpg" alt="Video Cover">
+            <video class="video" id="CCRVFVJLDEAU2" loop playsinline autoPlay muted
+              src="static/videos/CCRVFVJLDEAU2_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="CCRVFVJLDEAU2Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              Nano Armor
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="Dragon_1_1Div" style="width: 100%">
+            <img class="video-cover" src="static/images/Dragon_1_1_cover.jpg" alt="Video Cover">
+            <video class="video" id="Dragon_1_1" loop playsinline autoPlay muted src="static/videos/Dragon_1_1_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="Dragon_1_1Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              cartoon dragon, red and green
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="FairyhouseDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/Fairyhouse_cover.jpg" alt="Video Cover">
+            <video class="video" id="Fairyhouse" loop playsinline autoPlay muted src="static/videos/Fairyhouse_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="FairyhouseMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              fairy house with a garden
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="handbagDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/handbag_cover.jpg" alt="Video Cover">
+            <video class="video" id="handbag" loop playsinline autoPlay muted src="static/videos/handbag_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="handbagMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              crocodile skin handbag
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="head_2Div" style="width: 100%">
+            <img class="video-cover" src="static/images/head_2_cover.jpg" alt="Video Cover">
+            <video class="video" id="head_2" loop playsinline autoPlay muted src="static/videos/head_2_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="head_2Merge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A color bust photo of Donald Trump
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="klein-bottleDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/klein-bottle_cover.jpg" alt="Video Cover">
+            <video class="video" id="klein-bottle" loop playsinline autoPlay muted
+              src="static/videos/klein-bottle_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="klein-bottleMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              wooden klein bottle
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="knightarmorDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/knightarmor_cover.jpg" alt="Video Cover">
+            <video class="video" id="knightarmor" loop playsinline autoPlay muted
+              src="static/videos/knightarmor_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="knightarmorMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              A man wears a ser of medieval knight armor
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="video-compare-container" id="rabbitDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/rabbit_cover.jpg" alt="Video Cover">
+            <video class="video" id="rabbit" loop playsinline autoPlay muted src="static/videos/rabbit_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="rabbitMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              realistic rabbit
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="shoe_cvprDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/shoe_cvpr_cover.jpg" alt="Video Cover">
+            <video class="video" id="shoe_cvpr" loop playsinline autoPlay muted src="static/videos/shoe_cvpr_con.mp4"
+              onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="shoe_cvprMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              a UGG boot
+            </h4>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="video-compare-container" id="turtle_cvprDiv" style="width: 100%">
+            <img class="video-cover" src="static/images/turtle_cvpr_cover.jpg" alt="Video Cover">
+            <video class="video" id="turtle_cvpr" loop playsinline autoPlay muted
+              src="static/videos/turtle_cvpr_con.mp4" onplay="resizeAndPlay(this)" controls style="display:none;">
+            </video>
+
+            <canvas height=0 class="videoMerge" id="turtle_cvprMerge"></canvas>
+            <h4 class="subtitle has-text-centered">
+              a turtle
+            </h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{bib,
+      title={An Optimization Framework to Enforce Multi-View Consistency for Texturing 3D Meshes Using Pre-Trained Text-to-Image Models }, 
+     
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built on a <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Template</a> and project page <a href="https://dorverbin.github.io/refnerf/"
+                target="_blank">refnerf</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    bulmaCarousel.attach('#results-carousel11', {
+      slidesToScroll: 1,
+      slidesToShow: 2,
+      infinite: true,
+      autoplay: false,
+    });
+    bulmaCarousel.attach('#results-carousel22', {
+      slidesToScroll: 1,
+      slidesToShow: 2,
+      infinite: true,
+      autoplay: false,
+    });
+    bulmaCarousel.attach('#results-carousel33', {
+      slidesToScroll: 1,
+      slidesToShow: 2,
+      infinite: true,
+      autoplay: false,
+    });
+  </script>
+
+  <!-- Statcounter tracking code -->
+
+  <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+  <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
